@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Delete From Table</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        function deleteByEmail(e) {
+            const email = document.getElementById('text').value;
+            const tdata = document.getElementById('tableData');
+            console.log(email);
+            console.log(tdata);
+            for(let i = 0; i < tdata.length; i++) {
+                console.log(tdata[i]);
+            }
+            renderDOM();
+        }
+
+        function renderDOM() {
+            const div = (
+                <div>
+                    <table border="1" id="customers">
+                        <thead>
+                            <tr><th>Name</th><th>Email</th></tr>
+                        </thead>
+                        <tbody id="tableData">
+                            <tr><td>Eve</td><td name="tdata">eve@gmail.com</td></tr>
+                            <tr><td>Nick</td><td name="tdata">nick@yahooo.com</td></tr>
+                            <tr><td>Didi</td><td name="tdata">didi@didi.net</td></tr>
+                            <tr><td>Tedy</td><td name="tdata">tedy@tedy.com</td></tr>
+                        </tbody>
+                    </table>
+                    <label>Email: </label>
+                    <input id="text" type="text" name="email" />
+                    <button onClick={deleteByEmail}> Delete </button>
+                </div>
+            );
+            ReactDOM.render(div, rootHandle);
+        }
+        renderDOM();
+    </script>
+</body>
+</html>

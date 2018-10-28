@@ -1,0 +1,40 @@
+<!-- Write a JS function that dynamically validates an email input field when it is changed. If the input is invalid, apply to it the style "error". Do not validate on every keystroke, as it is annoying for the user, only watch of change events.
+
+A valid email will be in format: <name>@<domain>.<extension>
+
+Only lowercase Latin characters are allowed for any of the parts of the email. If the input is valid, clear the style. There will be no input/output, your program should instead modify the DOM of the given HTML document. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Email Validation </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        function handleBlur() {
+            
+        }
+
+        function renderDOM() {
+            const div = (
+                <div>
+                    <input type="text" onBlur={handleBlur} />
+                </div>
+            )
+            ReactDOM.render(div,rootHandle);
+        }
+        renderDOM();
+    </script>
+</body>
+</html>

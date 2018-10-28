@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Add Quote </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app');
+
+        function Heading(props) {
+            return <h1> { props.title } </h1>
+        }
+
+        function Navigation() {
+            return (
+                <div>
+                    <a href="index.html"> Random Quote API </a> |
+                    <a href="local-quote.html"> Random Quote (Local) </a> |
+                    <a href="#"> Add Quote </a> | 
+                    <a href="list-quotes.html"> List all Quotes (Local) </a>
+                </div>
+            )
+        }
+
+        class AddQuote extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    quoteValue: '',
+                    authorValue: ''
+                }
+                this.handleQuote = this.handleQuote.bind(this);
+                this.handleAuthor = this.handleAuthor.bind(this);
+                this.saveToLocal = this.saveToLocal.bind(this);
+            }
+
+            handleQuote(e) {
+                this.setState({
+                    quoteValue: e.target.value
+                })
+            }
+
+            handleAuthor(e) {
+                this.setState({
+                    authorValue: e.target.value
+                })
+            }
+
+            saveToLocal(e) {
+                e.preventDefault();
+
+                let quotes = JSON.parse(localStorage.getItem('quotes')) ? JSON.parse(localStorage.getItem('quotes')) : [];
+                
+                let data = {
+                    quote: this.state.quoteValue,
+                    author: this.state.authorValue
+                }
+
+                if(!((data.quote == '') && (data.author == ''))) {
+                    quotes.push(data);
+                    this.setState({
+                        localArray: quotes
+                    })
+                }
+                
+                localStorage.setItem('quotes', JSON.stringify(quotes)); 
+            }
+            
+            render() {
+                return (
+                    <div>
+                        <form onSubmit={this.saveToLocal}>
+                            <label><h4> Add Quote: </h4></label>
+                            <textarea onChange={this.handleQuote} value={this.state.quoteValue}></textarea>
+
+                            <label><h4> Add Author: </h4></label>
+                            <input type="text" onChange={this.handleAuthor} value={this.state.authorValue} />
+
+                            <label><h4> Click To Save </h4></label>
+                            <input type="submit" value="Save To Local" />
+                        </form>
+                    </div>
+                )
+            }
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Heading title="Quotify" />
+                    <Navigation />
+                    <AddQuote />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, appHandle);
+    </script>
+</body>
+</html>

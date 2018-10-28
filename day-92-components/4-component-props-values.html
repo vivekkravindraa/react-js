@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> React Components </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        // function MyComponent(props) {
+
+        // }
+
+        function MyString(props) {
+            return <p>{props.value}</p>
+        }
+
+        function MyNumber(props) {
+            return <p>{props.value}</p>
+        }
+
+        function MyArray(props) {
+            return <p>{props.value.join(', ')}</p>
+        }
+        
+        function MyObject(props) {
+            return <p>firstName: {props.value.firstName}, lastName: {props.value.lastName} </p>
+        }
+
+        function MyAryObj(props) {
+            return <ul>{props.value.map((item, index) => <li key={index}>{item.name}</li>)}</ul>
+        }
+
+        function MyFunction(props) {
+            return <p>{props.value()}</p>
+        }
+        
+        function App() {
+            return (
+                <div>
+                    <MyString value = "vivek" />
+                    <MyNumber value = "1" />
+                    
+                    <MyString value = {"vivek"} />
+                    <MyNumber value = {1} />
+                   
+                    <MyArray value = {['js','rb','py']} />
+                    <MyObject value = {{firstName: 'rahul', lastName: 'raghav'}}/>
+
+                    <MyAryObj value = {[{name: 'ramesh'}, {name: 'suresh'}]} />
+
+                    <MyFunction value = {function() {
+                        return 'I am inside a function!'
+                    }} />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, rootHandle);
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Build A Table </title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            text-align: right;
+        }
+    </style>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const MOUNTAINS = [
+            {name: 'Kilimanjaro', height: 5895, place: 'Tanzania'},
+            {name: 'Everest', height: 8848, place: 'Nepal'},
+            {name: 'Mount Fuji', height: 3776, place: 'Japan'},
+            {name: 'Mont Blanc', height: 4808, place: 'Italy/France'}
+        ];
+
+        const div = (
+            <div>
+                <table border="1px solid black">
+                    <thead>
+                        <tr>
+                            {Object.keys(MOUNTAINS[0]).map(function(value, index) {
+                                return <th key={index}>{value.toUpperCase()[0] + value.slice(1)}</th>
+                            })}
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {MOUNTAINS.map(function(value,index) {
+                                return (
+                                    <tr key={index}>
+                                        <td>{value.name}</td>
+                                        <td>{value.height}</td>
+                                        <td>{value.place}</td>
+                                    </tr>
+                                );
+                            })}
+                    </tbody>
+                </table>
+            </div>
+        );
+        ReactDOM.render(div, rootHandle);
+    </script>
+</body>
+</html>

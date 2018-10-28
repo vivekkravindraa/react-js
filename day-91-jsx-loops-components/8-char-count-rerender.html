@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> React - ReRender </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const state = {
+            words: 0,
+            chars: 0
+        }
+
+        function handleChange(e) {
+            state.words = e.target.value.split(' ').length;
+            state.chars = e.target.value.length;
+            renderDOM();
+        }
+
+        function renderDOM() {
+            const div = (
+                <div>
+                    <textarea onChange={handleChange}></textarea>
+                    <p>The count of word/s is {state.words} and the char/s is {state.chars} </p>
+                </div>
+            )
+            ReactDOM.render(div, rootHandle);
+        }
+        renderDOM();
+
+        // react.js - state and lifecycle
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Quotify </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app');
+
+        function Heading(props) {
+            return <h1> { props.title } </h1>
+        }
+
+        function Navigation() {
+            return (
+                <div>
+                    <a href="#"> Random Quote API </a> |
+                    <a href="local-quote.html"> Random Quote (Local) </a> |
+                    <a href="add-quote.html"> Add Quote </a> | 
+                    <a href="list-quotes.html"> List all Quotes (Local) </a>
+                </div>
+            )
+        }
+ 
+        class Quote extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    quotes: {},
+                    localArray: [],
+                    localSave: 'Save To Local',
+                    disabled: false,
+                    isLoaded: false
+                }
+                this.getQuote = this.getQuote.bind(this);
+                this.displayQuote = this.displayQuote.bind(this);
+                this.makeRequest = this.makeRequest.bind(this);
+                this.saveToLocal = this.saveToLocal.bind(this);
+            }
+
+            componentDidMount() {
+                this.makeRequest();   
+            }
+
+            makeRequest() {
+                axios.get(`https://talaikis.com/api/quotes/random`)
+                .then((response) => {
+                    // console.log(response.data);
+                    this.setState({
+                        quotes: response.data,
+                        isLoaded: true
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
+
+            getQuote() {
+                this.makeRequest();
+
+                this.setState({
+                    localSave: 'Save To Local',
+                    disabled: false
+                });
+            }
+
+            saveToLocal() {
+                this.setState(prevState => {
+                    prevState.localArray.push(prevState.quotes);
+                    localStorage.setItem('quotes', JSON.stringify(prevState.localArray));
+                });
+
+                this.setState({
+                    localSave: 'Saved',
+                    disabled: true
+                });
+            }
+
+            displayQuote() {
+                return (
+                    <div>
+                        <h2> { this.state.quotes.quote } </h2>
+                        <h4> { this.state.quotes.author } </h4>
+                        <button onClick={this.getQuote}> Get Another Quote </button>
+                        <button onClick={this.saveToLocal} disabled={this.state.disabled}> { this.state.localSave } </button>
+                    </div>  
+                )
+            }
+
+            render() {
+                return (
+                    <div> 
+                        { this.state.isLoaded ? this.displayQuote() : <img src="./loader.gif" /> }
+                    </div>  
+                )
+            } 
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Heading title="Quotify" />
+                    <Navigation />
+                    <Quote />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, appHandle);
+    </script>
+</body>
+</html>

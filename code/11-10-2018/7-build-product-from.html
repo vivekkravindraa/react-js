@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Build Product From </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+    <script type="text/babel">
+        var rootHandle = document.getElementById('root');
+
+        var categories = [
+                            { id: 1, name: 'Electronics' },
+                            { id: 2, name: 'Books'},
+                            { id: 3, name: 'Clothing'} 
+        ];
+        var subCategories = [
+                                { id: 1, categoryId: 1, name: 'Mobiles' },
+                                { id: 2, categoryId: 1, name: 'Laptops' },
+                                { id: 3, categoryId: 1, name: 'Speakers' },
+                                { id: 4, categoryId: 2, name: 'Fiction' },
+                                { id: 5, categoryId: 2, name: 'Biography' },
+                                { id: 6, categoryId: 1, name: 'Televisions' },
+                                { id: 7, categoryId: 3, name: 'Casual' },
+                                { id: 8, categoryId: 3, name: 'Formal' },
+                                { id: 9, categoryId: 2, name: 'Motivation' }
+        ];
+
+        function handleChange() {
+            var categoriesHandle = document.getElementById('categories');
+            var subCategoriesHandle = document.getElementById('subCategories');
+
+            var result = subCategories.filter((item) => {
+                return categoriesHandle.value == item.categoryId;
+            });
+            console.log(result);
+            
+            var output = result.map((item,index) => {
+                return <option key={index} value={item.id}>{item.name}</option>
+            });
+            console.log(output);
+
+            renderDOM();
+        }
+
+        function renderDOM() {
+            const div = (
+                <div>
+                    <h2> Add Product </h2>
+                    <form>
+                        <label> Category </label>
+                        <select id="categories" onChange={handleChange}> 
+                            <option value=""> Select Category</option>
+                                {categories.map((item,index) => {
+                                    return <option key={index} value={item.id}>{item.name}</option>
+                                })}
+                        </select>
+                        
+                        <label> Sub Category </label> 
+                        <select id="subCategories">
+                            <option value=""> Select Sub Category </option> 
+                            {subCategories.map((item,index) => {
+                                return <option key={index} value={item.id}>{item.name}</option>
+                            })}
+                        </select>
+                    </form>
+                </div>
+            );
+            ReactDOM.render(div, rootHandle);
+        }
+        renderDOM();
+    </script>
+</body>
+</html>

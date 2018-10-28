@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> React - UL </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        // const rootHandle = document.getElementById('root');
+        // let ul = document.createElement('ul');
+
+        // let li1 = document.createElement('li);
+        // let li1text = document.createTextNode('JavaScript');
+        // li1.appendChild(li1text);
+
+        // let li2 = document.createElement('li);
+        // let li2text = document.createTextNode('Node Js');
+        // li2.appendChild(li2text);
+
+        // ul.appendChild(li1);
+        // ul.appendChild(li2);
+        // rootHandle.appendChild(ul);
+
+        // const ul = React.createElement('ul', {},
+        //     React.createElement('li', {}, 'JavaScript'),
+        //     React.createElement('li', {}, 'Node Js'),
+        //     React.createElement('li', {}, 'React')
+        // );
+        // console.log(ul);
+
+        // javscript xml
+        const ul = (
+            <ul>
+                <li>JavaScript</li>
+                <li>Node Js</li>
+                <li>React</li>
+            </ul>
+        );
+        console.log(ul);
+
+        ReactDOM.render(ul, document.getElementById('root'));
+    </script>
+</body>
+</html>

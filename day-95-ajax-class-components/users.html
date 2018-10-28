@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> AJAX React Class Component </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app'); 
+        // function component , stateless functional component
+        
+        function Heading(props) {
+            return (
+                <h2>{props.title}</h2> 
+            )
+        }
+
+        class Users extends React.Component {
+            constructor(props) {
+                super(props); 
+                this.state = {
+                    users: [],
+                    isLoaded: false,
+                    search: '',
+                    filterUsers: [] // this array is used for maintaining the state for filtering 
+                }
+                this.displayTable = this.displayTable.bind(this); 
+                this.handleSearch = this.handleSearch.bind(this); 
+            }
+
+            componentDidMount(){
+                setTimeout(() => {
+                    axios.get('https://jsonplaceholder.typicode.com/users').then((response) => {
+                        this.setState({ 
+                            users: response.data, 
+                            isLoaded: true, 
+                            filterUsers: response.data
+                        });
+                    });
+                }, 1000);
+            }
+
+            handleSearch(e){
+                e.persist(); 
+                
+                // we are retaining the original value of this.state.users, search will happen on it, and the filtered data is set to filterUser 
+
+                this.setState(prevState => ({
+                    filterUsers: prevState.users.filter(user => user.name.indexOf(e.target.value) >= 0), 
+                    search: e.target.value
+                }));
+            }
+
+            displayTable() {
+                return (
+                    <div> 
+                        <input type="text" value={ this.state.search } placeholder="search by name" onChange={this.handleSearch}/> 
+
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th> ID </th>
+                                    <th> Name </th>
+                                    <th> Email </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                { this.state.filterUsers.map((user,index) => {
+                                    return <UserDetail user={user} key={index} /> 
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
+
+            render(){
+                return (
+                    <div> 
+                        { this.state.isLoaded ? this.displayTable() : <img src="./loader.gif" /> }
+                    </div>  
+                )
+            }
+        }
+
+        class UserDetail extends React.Component {
+            constructor(props) {
+                super(props); 
+                // this.state = {
+                //     user: props.user
+                // }
+            }
+
+            render(){
+                return (
+                    <tr>
+                        <td> { this.props.user.id } </td> 
+                        <td> { this.props.user.name } </td>
+                        <td> { this.props.user.email } </td> 
+                    </tr>
+                )
+            }
+        }
+
+        function App(){
+            return (
+                <div> 
+                    <Heading title="Listing Users"/> 
+                    <Users />
+
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, appHandle); 
+    </script>
+</body>
+</html>

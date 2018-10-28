@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> List Quotes </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app');
+
+        function Heading(props) {
+            return <h1> { props.title } </h1>
+        }
+
+        function Navigation() {
+            return (
+                <div>
+                    <a href="index.html"> Random Quote API </a> |
+                    <a href="local-quote.html"> Random Quote (Local) </a> |
+                    <a href="add-quote.html"> Add Quote </a> | 
+                    <a href="#"> List all Quotes (Local) </a>
+                </div>
+            )
+        }
+
+        class LocalQuote extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    localArray: JSON.parse(localStorage.getItem('quotes')) ? JSON.parse(localStorage.getItem('quotes')) : []
+                }
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h2> Listing Quotes - {this.state.localArray.length} </h2>
+                        <ul>
+                            {this.state.localArray.map((item, index) => {
+                                return <SingleQuote item={item} key={index} />
+                            })}
+                        </ul>         
+                    </div>
+                )
+            }
+        }
+
+        class SingleQuote extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    editMode: false
+                }
+                this.handleEdit = this.handleEdit.bind(this);
+                this.handleDelete = this.handleDelete.bind(this);
+                this.handleUpdate = this.handleUpdate.bind(this);
+                this.handleCancel = this.handleCancel.bind(this);
+                this.editQuote = this.editQuote.bind(this);
+                this.displayQuote = this.displayQuote.bind(this);
+            }
+
+            handleEdit() {
+                this.setState({
+                    editMode: true
+                })
+            }
+
+            handleDelete(e) {
+                console.log(e);
+            }
+
+            handleUpdate(e) {
+                console.log(e);
+            }
+            
+            handleCancel() {
+                this.setState({
+                    editMode: false
+                })
+            }
+
+            editQuote() {
+                return (
+                    <div>
+                        <form>
+                            <textarea value={ this.props.item.quote }> </textarea><br />
+                            <input type="text" value={ this.props.item.author } /><br />
+                        </form>
+                        <button onClick={this.handleUpdate}> Update </button>
+                        <button onClick={this.handleCancel}> Cancel </button>
+                    </div>
+                )
+            }
+
+            displayQuote() {
+                return (
+                    <li>
+                        <h3> { this.props.item.quote } </h3>
+                        <h5> { this.props.item.author } </h5>
+                        <button onClick={this.handleEdit}> Edit From Local </button>
+                        <button onClick={this.handleDelete}> Delete From Local </button>
+                    </li>
+                )
+            }
+
+            render() {
+                return this.state.editMode ? this.editQuote() : this.displayQuote();
+            }
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Heading title="Quotify" />
+                    <Navigation />
+                    <LocalQuote />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, appHandle);
+    </script>
+</body>
+</html>

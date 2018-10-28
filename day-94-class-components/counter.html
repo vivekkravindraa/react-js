@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Counter </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app');
+
+        class Counter extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    count: props.value
+                }
+                this.countUp = this.countUp.bind(this);
+                this.countDown = this.countDown.bind(this);
+            }
+            countUp() {
+                this.setState(prevState => ({
+                    count: prevState.count + 1
+                }))
+            }
+            countDown() {
+                this.setState(prevState => ({
+                    count: prevState.count - 1
+                }))
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>Count - {this.state.count}</h2>
+                        <button onClick={this.countUp}>Up</button>
+                        <button onClick={this.countDown}>Down</button>
+                    </div>
+                )
+            }
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Counter value = {0} />
+                    <Counter value = {10} />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, appHandle);
+    </script>
+</body>
+</html>

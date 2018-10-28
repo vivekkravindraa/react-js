@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Embed - Function </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        // function is returning a value - Primitive / Object
+
+        function add(n1, n2) {
+            return n1 + n2;
+        }
+
+        const sub = function(n1, n2) {
+            return n1 - n2;
+        }
+
+        const h1 = <h1>The sum of 10 + 20 = {add(10,20)} and 10 - 20 = {sub(10,20)}</h1>;
+
+        ReactDOM.render(h1, rootHandle);
+    </script>
+</body>
+</html>

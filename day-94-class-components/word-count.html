@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Counter </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app');
+
+        class WordCount extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    value: '',
+                    words: 0,
+                    chars: 0
+                }
+                this.handleChange = this.handleChange.bind(this);
+            }
+            handleChange(e) {
+                this.setState({
+                    value: e.target.value,
+                    words: e.target.value.split(' ').length,
+                    chars: e.target.value.length
+                })
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>{this.props.title}</h2>
+                        <textarea onChange={this.handleChange} value={this.state.value}>
+                            
+                        </textarea>
+                        <p>You have written <b>{this.state.words}</b> words and <b>{this.state.chars}</b> characters.</p>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<WordCount title="Word Count"/>, appHandle);
+    </script>
+</body>
+</html>

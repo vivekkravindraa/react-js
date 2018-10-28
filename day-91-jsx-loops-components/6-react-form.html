@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> React - Form </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        function handleChange(e) {
+            // console.log(e);
+            // console.log(e.target);
+            document.getElementById('words').innerText = e.target.value.length;
+            document.getElementById('chars').innerText = e.target.value.split(' ').length;
+        }
+
+        const div = (
+            <div>
+                <textarea onChange={handleChange}></textarea>
+                <p> There are totally <b><span id="words">0</span> word/s</b> and <b><span id="chars"> 0 </span> character/s</b></p>
+            </div>
+        )
+
+        ReactDOM.render(div, rootHandle);
+    </script>
+</body>
+</html>

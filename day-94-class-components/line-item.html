@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Counter </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script type="text/babel">
+        const appHandle = document.getElementById('app');
+
+        class LineItem extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    quantity: this.props.item.quantity,
+                    total: this.props.item.price * this.props.item.quantity
+                }
+                this.decrease = this.decrease.bind(this);
+                this.increase = this.increase.bind(this);
+            }
+            decrease() {
+                // if(this.state.quantity > 1) {
+                    this.setState(prevState => ({
+                        quantity: prevState.quantity - 1,
+                        total: prevState.total - this.props.item.price
+                    }));
+                // }
+            }
+            increase() {
+                this.setState(prevState => ({
+                    quantity: prevState.quantity + 1,
+                    total: prevState.total + this.props.item.price
+                }));
+            }
+            render() {
+                return (
+                    <div>
+                        <table border="1">
+                            <tr>
+                                <td>{this.props.item.name}</td>
+                                <td>{this.props.item.price}</td>
+                                <td>
+                                    <button onClick={this.decrease} disabled={this.state.quantity > 1 ? false : true}> - </button>
+                                    {this.state.quantity}
+                                    <button onClick={this.increase}> + </button>
+                                </td>
+                                <td>{this.state.total}</td>
+                            </tr>
+                        </table>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<LineItem item={{name:'Marker', price: 15, quantity: 1}} />, appHandle);
+    </script>
+</body>
+</html>

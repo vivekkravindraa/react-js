@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> React Components </title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root'); 
+
+        const fruits = ['apple', 'mango', 'watermelon'];
+        const players = ['virat', 'sachin', 'dhoni'];
+        const employees = ['ramesh', 'veeresh', 'mahesh'];
+        const cities = ['bangalore', 'mysore', 'tumkur'];
+
+        function App(props) {
+            return (
+                <div>
+                    <h2>{props.name}</h2>
+                    <Fruit fruitNames = {fruits} />
+                    <City cityNames = {cities} />
+                    <Player playerNames = {players} />
+                    <Employee employeeNames = {employees} />
+                </div> 
+            )
+        }
+        
+        function GenerateTableRows(props) {
+            return props.items.map(function(item, index) {
+                return (
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item}</td>
+                    </tr>
+                )
+            });
+        }
+
+        function Table(props) {
+            return (
+                <div> 
+                    <h2>Listing {props.heading} - {props.items.length} </h2> 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> # </th> 
+                                <th> Name </th> 
+                            </tr>
+                        </thead>    
+                        <tbody>
+                           <GenerateTableRows items={props.items} />
+                        </tbody>
+                    </table>
+                </div> 
+            )
+        }
+
+        function Fruit(props) {
+            return (
+                <div>
+                    <Table heading="fruits" items={fruits} />
+                    <p> We are not listing the seasonal fruits </p>
+                </div>
+            )
+        }
+
+        function City(props) {
+            return (
+                <Table heading="cities" items={cities} />
+            )
+        }
+
+        function Employee(props) {
+            return (
+                <Table heading="employees" items={employees} />
+            )
+        }
+
+        function Player(props) {
+            return (
+                <Table heading="players" items={players} />
+            )
+        }
+
+        ReactDOM.render(<App name="Listing App" />, rootHandle);
+    </script>
+</body>
+</html>
