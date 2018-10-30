@@ -1,9 +1,5 @@
 import React from 'react';
 
-function Heading(props) {
-    return <h1> { props.title } </h1>
-}
-
 class LocalQuote extends React.Component {
     constructor(props) {
         super(props);
@@ -18,11 +14,11 @@ class LocalQuote extends React.Component {
     componentDidMount() {
         this.makeRequest();
     }
-    
+
     makeRequest() {
         let localData = JSON.parse(localStorage.getItem('quotes'));
-        
-        if(!localData) {
+
+        if (!localData) {
             this.setState({
                 notice: 'Local storage is empty.'
             })
@@ -39,20 +35,24 @@ class LocalQuote extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2> { this.state.quotes.quote } </h2>
-                <h4> { this.state.quotes.author } </h4>
-                <h5><mark> { this.state.notice } </mark></h5>
-                <button onClick={this.getQuote}> Get Another Quote </button>
+            <div className="card text-center">
+                <div className="card-body">
+                    <h1 className="card-title">Quotify</h1>
+                    <h2 className="card-title alert alert-light"> {this.state.quotes.quote} </h2>
+                    <h4 className="card-text"> {this.state.quotes.author} </h4>
+                    <h5 className="card-text"> {this.state.notice} </h5>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-primary" onClick={this.getQuote}> Get Another Quote </button>
+                    </div>
+                </div>
             </div>
         )
-    } 
+    }
 }
 
 function LocalQuoteApp() {
     return (
         <div>
-            <Heading title="Quotify" />
             <LocalQuote />
         </div>
     )

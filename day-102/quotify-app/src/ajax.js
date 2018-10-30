@@ -2,10 +2,6 @@ import React from 'react';
 import axios from "axios";
 import loader from "./loader.gif";
 
-function Heading(props) {
-    return <h1> {props.title} </h1>
-}
-
 class Quote extends React.Component {
     constructor(props) {
         super(props);
@@ -27,8 +23,7 @@ class Quote extends React.Component {
     }
 
     makeRequest() {
-        setTimeout(() => {
-            axios.get(`https://talaikis.com/api/quotes/random`)
+        axios.get(`https://talaikis.com/api/quotes/random`)
             .then((response) => {
                 // console.log(response.data);
                 this.setState({
@@ -39,7 +34,6 @@ class Quote extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
-        }, 1000);
     }
 
     getQuote() {
@@ -65,11 +59,16 @@ class Quote extends React.Component {
 
     displayQuote() {
         return (
-            <div>
-                <h2> {this.state.quotes.quote} </h2>
-                <h4> {this.state.quotes.author} </h4>
-                <button onClick={this.getQuote}> Get Another Quote </button>
-                <button onClick={this.saveToLocal} disabled={this.state.disabled}> {this.state.localSave} </button>
+            <div className="card text-center">
+                <div className="card-body">
+                    <h1>Quotify</h1>
+                    <h2 className="card-title alert alert-primary"> {this.state.quotes.quote} </h2>
+                    <h4 className="card-text"> {this.state.quotes.author} </h4>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-primary" onClick={this.getQuote}> Get Another Quote </button>
+                        <button type="button" className="btn btn-success" onClick={this.saveToLocal} disabled={this.state.disabled}> {this.state.localSave} </button>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -86,7 +85,6 @@ class Quote extends React.Component {
 function AjaxApp() {
     return (
         <div>
-            <Heading title="Quotify" />
             <Quote />
         </div>
     )

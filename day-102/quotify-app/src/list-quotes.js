@@ -1,7 +1,13 @@
 import React from 'react';
 
 function Heading(props) {
-    return <h1> { props.title } </h1>
+    return (
+        <div className="card text-center">
+            <div className="card-body">
+                <h1 class="text-center"> {props.title} </h1>
+            </div>
+        </div>
+    )
 }
 
 class LocalQuote extends React.Component {
@@ -15,18 +21,17 @@ class LocalQuote extends React.Component {
     render() {
         return (
             <div>
-                <h2> Listing Quotes - {this.state.localArray.length} </h2>
-                <ul>
-                    {this.state.localArray.map((item, index) => {
-                        return <SingleQuote item={item} key={index} />
-                    })}
-                </ul>         
+                <Heading title="Quotify" />
+                <h2 class="text-center">Listing Quotes - {this.state.localArray.length} </h2>
+                {this.state.localArray.map((item, index) => {
+                    return <SingleQuote item={item} key={index} />
+                })}
             </div>
         )
     }
 }
 
-class SingleQuote extends React.Component {
+class SingleQuote extends LocalQuote {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,7 +58,7 @@ class SingleQuote extends React.Component {
     handleUpdate(e) {
         console.log(e);
     }
-    
+
     handleCancel() {
         this.setState({
             editMode: false
@@ -62,25 +67,35 @@ class SingleQuote extends React.Component {
 
     editQuote() {
         return (
-            <div>
-                <form>
-                    <textarea value={ this.props.item.quote }> </textarea><br />
-                    <input type="text" value={ this.props.item.author } /><br />
-                </form>
-                <button onClick={this.handleUpdate}> Update </button>
-                <button onClick={this.handleCancel}> Cancel </button>
+            <div className="card text-center">
+                <div className="card-body">
+                    <form>
+                        <div className="form-group col-md-12">
+                            <textarea className="form-control" value={this.props.item.quote}> </textarea>
+                            <input className="form-control" type="text" value={this.props.item.author} />
+                        </div>
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-success" onClick={this.handleUpdate}> Update </button>
+                            <button type="button" className="btn btn-danger" onClick={this.handleCancel}> Cancel </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         )
     }
 
     displayQuote() {
         return (
-            <li>
-                <h3> { this.props.item.quote } </h3>
-                <h5> { this.props.item.author } </h5>
-                <button onClick={this.handleEdit}> Edit From Local </button>
-                <button onClick={this.handleDelete}> Delete From Local </button>
-            </li>
+            <div className="card text-center">
+                <div className="card-body">
+                    <h5 className="card-title alert alert-primary"> {this.props.item.quote} </h5>
+                    <h6 className="card-text"> {this.props.item.author} </h6>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-primary" onClick={this.handleEdit}> Edit From Local </button>
+                        <button type="button" className="btn btn-danger" onClick={this.handleDelete}> Delete From Local </button>
+                    </div>
+                </div>
+            </div>
         )
     }
 
@@ -92,7 +107,6 @@ class SingleQuote extends React.Component {
 function ListQuotesApp() {
     return (
         <div>
-            <Heading title="Quotify" />
             <LocalQuote />
         </div>
     )
