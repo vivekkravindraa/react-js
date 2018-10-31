@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quotify</title>
+    <script src="/react/js/babel.js"></script>
+    <script src="/react/js/react.development.js"></script>
+    <script src="/react/js/react-dom.development.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <script type="text/babel">
+        const appHandle = document.getElementById('app'); 
+        // function component , stateless functional component
+        
+        function Heading(props) {
+            return (
+                <h2>{props.title}</h2>
+            )
+        }
+
+        class Quotify extends React.Component {
+            constructor(props) {
+                super(props); 
+                this.state = {
+                textareavalue:'',
+                textValue:'',
+                count : 0,
+                local:JSON.parse(localStorage.getItem('array'))
+                }
+            }
+
+            render(){
+                return (
+                    <div>
+                    <a href='./index.html'>Random Quote(API)</a><span> | </span>
+                    <a href="./local-quote.html">Random Quote(Local)</a><span> | </span>
+                    <a href="./add-quote.html">Add Quote</a><br/><br/><span> | </span>
+                    <a href="list-all-quote.html">List All Quotes (Local)</a>
+                    <h1>Total Quotes - {this.state.count}</h1>
+                    {this.state.local.map((quote,index) => {
+                        return <SingleQuote EachQuote={quote} value={index} key={index} />
+                    })}
+                    </div> 
+                    
+                )
+            }
+        }
+
+        class SingleQuote extends React.Component {
+            constructor(props) {
+                super(props); 
+                this.state = {
+                    quotes:this.props.EachQuote.quote,
+                    author:this.props.EachQuote.author,
+                    local:JSON.parse(localStorage.getItem('array')),
+                    editMode:false,
+                    textareavalue : '',
+                    textValue: '',
+                    count :0
+                }
+                this.removeQuote = this.removeQuote.bind(this)
+                this.editQuote = this.editQuote.bind(this)
+                this.displayQuote = this.displayQuote.bind(this)
+                this.editForm = this.editForm.bind(this)
+                this.updateQuote = this.updateQuote.bind(this)
+                this.updateTextArea = this.updateTextArea.bind(this)
+                this.updateAuthorName = this.updateAuthorName.bind(this)
+                this.cancelUpdate = this.cancelUpdate.bind(this)
+            }
+
+            cancelUpdate() {
+                this.setState({
+                    editMode:false
+                })
+            }
+            
+            updateQuote(e) {
+                let data = {
+                    quote:this.state.textareavalue,
+                    author:this.state.textValue
+                }
+                let localData = JSON.parse(localStorage.getItem('array'))
+                localData[e.target.value] = data
+                localStorage.setItem('array',JSON.stringify(localData))
+                this.setState({
+                    editMode:false,
+                    quotes:(data.quote.length > 0 ? data.quote : this.state.quotes),
+                    author:(data.author.length > 0 ? data.author : this.state.author)
+                })
+            }
+
+            updateTextArea(e) {
+                this.setState({
+                    textareavalue:e.target.value
+                })
+            }
+
+            updateAuthorName(e) {
+                this.setState({
+                    textValue:e.target.value
+                })
+            }
+
+            editForm() {
+                return (
+                    <div>
+                    <textarea onChange={this.updateTextArea} name="text">{this.state.quotes}</textarea><br/><br/>
+                    <textarea onChange={this.updateAuthorName}>{this.state.author}</textarea><br/><br/>
+                    <button onClick={this.updateQuote} value = {this.props.value}>Update</button>
+                    <button onClick={this.cancelUpdate} value = {this.props.value}>Cancel</button>
+                    </div>
+                )
+            }
+
+            displayQuote() {
+                return (
+                    <li>
+                        <h2>{this.state.quotes}</h2>
+                        <h4>{this.state.author}</h4>
+                        <button onClick={this.editQuote} value={this.props.value}>Edit</button>
+                        <button onClick={this.removeQuote}  value={this.props.value}>Remove</button>
+                    </li>
+                )
+            }
+            
+            editQuote(e) {
+                this.setState({
+                    editMode : true
+                })
+            }
+
+            removeQuote(e) {
+                // this.state.local.forEach((values,index) => {
+                // if(e.target.value==index) {
+                let targetValue = e.target.value
+                this.state.local.splice(targetValue,1)
+                console.log(this.state.local)
+                this.setState( prevState => {
+                    localStorage.setItem('array', JSON.stringify(prevState.local))
+                })
+                e.target.parentNode.remove()
+                // }
+                // })
+            }
+
+            render(){
+                return (
+                    (this.state.editMode ? this.editForm() : this.displayQuote())
+                )
+            }
+        }
+
+        function App(){
+            return (
+                <div> 
+                    <Heading title="Quotify"/> 
+                    <Quotify />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, appHandle); 
+    </script>
+</body>
+</html>

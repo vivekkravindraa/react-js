@@ -4,7 +4,7 @@ function Heading(props) {
     return (
         <div className="card text-center">
             <div className="card-body">
-                <h1 class="text-center"> {props.title} </h1>
+                <h1 className="text-center"> {props.title} </h1>
             </div>
         </div>
     )
@@ -22,7 +22,7 @@ class LocalQuote extends React.Component {
         return (
             <div>
                 <Heading title="Quotify" />
-                <h2 class="text-center">Listing Quotes - {this.state.localArray.length} </h2>
+                <h2 className="text-center">Listing Quotes - {this.state.localArray.length} </h2>
                 {this.state.localArray.map((item, index) => {
                     return <SingleQuote item={item} key={index} />
                 })}

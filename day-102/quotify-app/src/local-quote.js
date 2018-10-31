@@ -41,7 +41,7 @@ class LocalQuote extends React.Component {
                     <h2 className="card-title alert alert-light"> {this.state.quotes.quote} </h2>
                     <h4 className="card-text"> {this.state.quotes.author} </h4>
                     <h5 className="card-text"> {this.state.notice} </h5>
-                    <div className="btn-group">
+                    <div>
                         <button type="button" className="btn btn-primary" onClick={this.getQuote}> Get Another Quote </button>
                     </div>
                 </div>
